@@ -1,5 +1,6 @@
 DB Schema
 ---
+```.sql
 CREATE TABLE payment_events (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     buyer_id BIGINT NOT NULL,
@@ -14,7 +15,9 @@ CREATE TABLE payment_events (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+```
 
+```.sql
 CREATE TABLE payment_orders (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     payment_event_id BIGINT NOT NULL,
@@ -31,7 +34,9 @@ CREATE TABLE payment_orders (
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (payment_event_id) REFERENCES payment_events(id)
 );
+```
 
+```.sql
 CREATE TABLE payment_order_histories (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     payment_order_id BIGINT NOT NULL,
@@ -42,4 +47,4 @@ CREATE TABLE payment_order_histories (
     reason VARCHAR(255),
     FOREIGN KEY (payment_order_id) REFERENCES payment_orders(id)
 );
-
+```
