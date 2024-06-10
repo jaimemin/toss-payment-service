@@ -56,7 +56,7 @@ class R2DBCPaymentDatabaseHelper(
         return deletePaymentOrderHistories()
             .flatMap { deletePaymentOrders() }
             .flatMap { deletePaymentEvents() }
-            .flatMap { deleteOutboxes() }
+//            .flatMap { deleteOutboxes() }
             .`as`(transactionalOperator::transactional)
             .then()
     }

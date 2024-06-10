@@ -3,7 +3,9 @@ package com.tistory.jaimemin.paymentservice.payment.adapter.`in`.web.api
 import com.tistory.jaimemin.paymentservice.common.WebAdapter
 import com.tistory.jaimemin.paymentservice.payment.adapter.`in`.web.request.TossPaymentConfirmRequest
 import com.tistory.jaimemin.paymentservice.payment.adapter.`in`.web.response.ApiResponse
-import com.tistory.jaimemin.paymentservice.payment.adapter.out.web.toss.executor.TossPaymentExecutor
+import com.tistory.jaimemin.paymentservice.payment.application.port.`in`.PaymentConfirmCommand
+import com.tistory.jaimemin.paymentservice.payment.application.port.`in`.PaymentConfirmUseCase
+import com.tistory.jaimemin.paymentservice.payment.domain.PaymentConfirmationResult
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -16,19 +18,18 @@ import reactor.core.publisher.Mono
 @RestController
 @RequestMapping("/v1/toss")
 class TossPaymentController(
-    private val tossPaymentExecutor: TossPaymentExecutor
+    private val paymentConfirmUseCase: PaymentConfirmUseCase
 ) {
 
     @PostMapping("/confirm")
-    fun confirm(@RequestBody request: TossPaymentConfirmRequest): Mono<ResponseEntity<ApiResponse<String>>> {
-        return tossPaymentExecutor.execute(
+    fun confirm(@RequestBody request: TossPaymentConfirmRequest): Mono<ResponseEntity<ApiResponse<PaymentConfirmationResult>>> {
+        val command = PaymentConfirmCommand(
             paymentKey = request.paymentKey,
             orderId = request.orderId,
-            amount = request.amount.toString()
-        ).map {
-            ResponseEntity.ok().body(
-                ApiResponse.with(HttpStatus.OK, "Ok", it)
-            )
-        }
+            amount = request.amount
+        )
+
+        return paymentConfirmUseCase.confirm(command)
+            .map { ResponseEntity.ok().body(ApiResponse.with(HttpStatus.OK, "", it)) }
     }
 }
