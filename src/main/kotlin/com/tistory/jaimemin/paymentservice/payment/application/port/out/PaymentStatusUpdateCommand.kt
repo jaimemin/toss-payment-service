@@ -1,5 +1,6 @@
 package com.tistory.jaimemin.paymentservice.payment.application.port.out
 
+import com.tistory.jaimemin.paymentservice.payment.domain.PaymentExecutionResult
 import com.tistory.jaimemin.paymentservice.payment.domain.PaymentExtraDetails
 import com.tistory.jaimemin.paymentservice.payment.domain.PaymentFailure
 import com.tistory.jaimemin.paymentservice.payment.domain.PaymentStatus
@@ -11,6 +12,14 @@ data class PaymentStatusUpdateCommand(
     val extraDetails: PaymentExtraDetails? = null,
     val failure: PaymentFailure? = null
 ) {
+
+    constructor(paymentExecutionResult: PaymentExecutionResult) : this(
+        paymentKey = paymentExecutionResult.paymentKey,
+        orderId = paymentExecutionResult.orderId,
+        status = paymentExecutionResult.paymentStatus(),
+        extraDetails = paymentExecutionResult.extraDetails,
+        failure = paymentExecutionResult.failure
+    )
 
     init {
         require(status == PaymentStatus.SUCCESS || status == PaymentStatus.FAILURE || status == PaymentStatus.UNKNOWN) {
