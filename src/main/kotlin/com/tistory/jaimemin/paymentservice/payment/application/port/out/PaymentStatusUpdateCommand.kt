@@ -1,7 +1,7 @@
 package com.tistory.jaimemin.paymentservice.payment.application.port.out
 
-import com.tistory.jaimemin.paymentservice.payment.domain.PaymentExecutionFailure
 import com.tistory.jaimemin.paymentservice.payment.domain.PaymentExtraDetails
+import com.tistory.jaimemin.paymentservice.payment.domain.PaymentFailure
 import com.tistory.jaimemin.paymentservice.payment.domain.PaymentStatus
 
 data class PaymentStatusUpdateCommand(
@@ -9,7 +9,7 @@ data class PaymentStatusUpdateCommand(
     val orderId: String,
     val status: PaymentStatus,
     val extraDetails: PaymentExtraDetails? = null,
-    val failure: PaymentExecutionFailure? = null
+    val failure: PaymentFailure? = null
 ) {
 
     init {
