@@ -2,7 +2,7 @@ spring:
   r2dbc:
     url: r2dbc:mysql://localhost:3306/test
     username: root
-    password: [ YOUR_PASSWORD ]
+    password: 1234
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
   thymeleaf:
@@ -14,8 +14,39 @@ spring:
           web: DEBUG
           r2dbc: DEBUG
           transaction: DEBUG
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: pkc-gq2xn.asia-northeast3.gcp.confluent.cloud:9092
+          configuration:
+            security:
+              protocol: SASL_SSL
+            sasl:
+              jaas:
+                config: org.apache.kafka.common.security.plain.PlainLoginModule required username='ISUWP5ZMGA36NH4H' password='A8bP0FcQqhvP3gTd1XVS0v10axf68RO8yGoDXQqcVBx+D7abVDDoR5fR07R93uIs';
+              mechanism: PLAIN
+            client:
+              dns:
+                lookup: use_all_dns_ips
+          required-acks: all
+          auto-create-topics: false
+        bindings:
+          send-out-0:
+            producer:
+              record-metadata-channel: payment-result
+      bindings:
+        send-out-0:
+          destination: payment
+          group: payment-service
 
 PSP:
   toss:
-    secretKey: [ YOUR_KEY ]
+    secretKey: test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6
     url: https://api.tosspayments.com
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bindings
