@@ -4,6 +4,9 @@ import com.tistory.jaimemin.paymentservice.payment.domain.Product
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Flux
 
+/**
+ * 상품 정보를 제공하도록 하드코딩
+ */
 @Component
 class MockProductClient : ProductClient {
 

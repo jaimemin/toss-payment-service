@@ -13,6 +13,10 @@ import reactor.netty.resources.ConnectionProvider
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+/**
+ * WebClient는 Spring WebFlux에서 비동기적인 HTTP 요청을 생성해서 보낼 수 있는 client
+ * -> 이를 통해 네트워크 통신
+ */
 @Configuration
 class TossPaymentWebClientConfiguration(
     @Value("\${PSP.toss.url}") private val baseUrl: String,

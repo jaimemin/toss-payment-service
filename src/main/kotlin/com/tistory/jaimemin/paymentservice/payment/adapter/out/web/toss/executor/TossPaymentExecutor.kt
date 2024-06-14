@@ -17,6 +17,9 @@ import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+/**
+ * 실제 외부로 API 요청을 보내는 역할
+ */
 @Component
 class TossPaymentExecutor(
     private val tossPaymentWebClient: WebClient,
@@ -26,7 +29,7 @@ class TossPaymentExecutor(
     override fun execute(command: PaymentConfirmCommand): Mono<PaymentExecutionResult> {
         return tossPaymentWebClient.post()
             .uri(uri)
-            .header("Idempotency-Key", command.orderId)
+            .header("Idempotency-Key", command.orderId) // 멱등성 키
             .bodyValue(
                 """
                 {

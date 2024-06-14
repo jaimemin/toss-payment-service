@@ -22,7 +22,7 @@ class CheckoutController(
             cartId = request.cartId,
             buyerId = request.buyerId,
             productIds = request.productIds,
-            idempotencyKey = IdempotencyCreator.create(request.seed)
+            idempotencyKey = IdempotencyCreator.create(request.seed) // 원래는 request 그 자체가 전달되어야 함
         )
 
         return checkoutUseCase.checkout(command)

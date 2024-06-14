@@ -35,5 +35,5 @@ data class PaymentExtraDetails(
     val orderName: String,
     val pspConfirmationStatus: PSPConfirmationStatus,
     val totalAmount: Long,
-    val pspRawData: String
+    val pspRawData: String // psp 응답 원시 데이터
 )

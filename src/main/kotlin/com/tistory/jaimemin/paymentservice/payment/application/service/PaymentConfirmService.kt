@@ -25,6 +25,10 @@ class PaymentConfirmService(
 ) : PaymentConfirmUseCase {
 
     override fun confirm(command: PaymentConfirmCommand): Mono<PaymentConfirmationResult> {
+        /**
+         * NOT_STARTED -> EXECUTING
+         * EXECUTING으로 변경시켜야 실패하더라도 재시도 로직 적용 가능
+         */
         return paymentStatusUpdatePort.updatePaymentStatusToExecuting(command.orderId, command.paymentKey)
             .filterWhen { paymentValidationPort.isValid(command.orderId, command.amount) }
             .flatMap { paymentExecutorPort.execute(command) }

@@ -10,6 +10,9 @@ import com.tistory.jaimemin.paymentservice.payment.domain.PendingPaymentEvent
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
+/**
+ * 데이터베이스와 연결하기 위한 어댑터
+ */
 @PersistentAdapter
 class PaymentPersistentAdapter(
     private val paymentRepository: PaymentRepository,

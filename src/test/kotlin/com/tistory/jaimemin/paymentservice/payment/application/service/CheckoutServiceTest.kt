@@ -29,7 +29,7 @@ class CheckoutServiceTest(
     }
 
     @Test
-    fun `should save PaymentEvent and PaymentORder successfully`() {
+    fun `should save PaymentEvent and PaymentOrder successfully`() {
         val orderId: String = UUID.randomUUID().toString()
         val checkoutCommand = CheckoutCommand(
             cartId = 1,

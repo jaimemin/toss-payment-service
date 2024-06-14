@@ -16,8 +16,8 @@ import java.time.LocalDateTime
 
 @Repository
 class R2DBCPaymentRepository(
-    private val databaseClient: DatabaseClient,
-    private val transactionalOperator: TransactionalOperator
+    private val databaseClient: DatabaseClient, // SQL 쿼리 실행을 위한
+    private val transactionalOperator: TransactionalOperator // reactive 에서 transactional 관리를 위한
 ) : PaymentRepository {
 
     override fun save(paymentEvent: PaymentEvent): Mono<Void> {
